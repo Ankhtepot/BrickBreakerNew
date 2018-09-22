@@ -22,12 +22,12 @@ public class MagicShot : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        print("MagicShot met trigger");
+        //print("MagicShot met trigger");
         DestroyThis();
     }
 
     private void DestroyThis() {
-        MusicPlayer SFXPlayer = FindObjectOfType<MusicPlayer>();
+        SoundSystem SFXPlayer = FindObjectOfType<SoundSystem>();
         if (SFXPlayer) SFXPlayer.PlayClip(hitSound);
         Destroy(gameObject);
     }

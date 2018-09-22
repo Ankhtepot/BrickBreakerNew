@@ -28,7 +28,7 @@ public class Pickup : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Paddle") {
-            MusicPlayer SFXPlayer = FindObjectOfType<MusicPlayer>();
+            SoundSystem SFXPlayer = FindObjectOfType<SoundSystem>();
             if(SFXPlayer) SFXPlayer.PlayClip(pickupSound);
             pickupTable.ApplyEffect(pickupType);
             DestroyThis();

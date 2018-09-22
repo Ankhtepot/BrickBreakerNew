@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,25 +16,32 @@ public class Ball : MonoBehaviour {
     [SerializeField] AudioClip wallBounceSound;
 
     //states
-    bool hasStarted = false;
+    public bool hasStarted = false;
     public Boolean isGlueApplied = false;
     /*must have this Vector3 because when GlueIsActive, PaddleBallRelation must change,
      * but need to keep basic relation for new ball or correction */
     Vector3 PaddleBallRelation;
     Vector3 basePaddleBallRelation;
     GameSession gameSession;
-    MusicPlayer SFXPlayer;
+    SoundSystem SFXPlayer;
 
     // Use this for initialization
     void Start() {
         gameSession = FindObjectOfType<GameSession>();
-        SFXPlayer = FindObjectOfType<MusicPlayer>();
-        if (SFXPlayer) print("Ball: SFXPlayer assigned");
+        SFXPlayer = FindObjectOfType<SoundSystem>();
+        //if (SFXPlayer) print("Ball: SFXPlayer assigned");
         basePaddleBallRelation = gameSession.basePaddleBallRelation;
         PaddleBallRelation = basePaddleBallRelation;
         //print("PaddleBallRelation: " + PaddleBallRelation.ToString());
         gameSession.AddBall();
-        if (this.tag == "Fireball") GetComponentInChildren<ParticleSystem>().Play();
+        ManageFireballOnStart();
+        if (isOtherBallPresent()) hasStarted = true;
+    }
+
+    private void ManageFireballOnStart() {
+        if (this.tag == "Fireball")
+            foreach (ParticleSystem effect in GetComponentsInChildren<ParticleSystem>())
+                effect.Play();
     }
 
     // Update is called once per frame
@@ -94,17 +102,26 @@ public class Ball : MonoBehaviour {
     private void PlaySFX(Collision2D collision) {
         //Debug.Log("Ball collides with " + collision.gameObject.tag);
         if (SFXPlayer && SFXPlayer.GetVolume() != 0f) {
+            //print("Ball: PlaySFX: collision.tag: " + collision.gameObject.tag);
             switch (collision.gameObject.tag) {
                 case "Unbreakable": SFXPlayer.PlayClip(unbreakableSound); break;
                 case "Paddle": SFXPlayer.PlayClip(paddleSound); break;
                 case "Wall": SFXPlayer.PlayClip(wallBounceSound); break;
-                case "LoseColider": AudioSource.PlayClipAtPoint(loseSound,transform.position); break;
-                default: SFXPlayer.PlayClip(bounceSounds[UnityEngine.Random.Range(0, bounceSounds.Length)]); break;
-            } 
+                //case "LoseColider": AudioSource.PlayClipAtPoint(loseSound,transform.position, SFXPlayer.GetVolume()); break;                
+                default: {
+                        IBrickPlayList B = collision.gameObject.GetComponent<Brick>();
+                        if (B != null) {
+                            print("Ball: PlaySFX: collision.gameObject is Brick class, PlayListID is: " + B.GetPlayListID().ToString());
+                            SFXPlayer.PlayRandomSoundFromList(B.GetPlayListID());
+                        } else SFXPlayer.PlayRandomSoundFromList(SoundSystem.PlayListID.Brick);
+                            }; break;
+            }
         }
     }
 
     private void ManageLoseCollider() {
+        print("Should play lose sound");
+        if(SFXPlayer) SFXPlayer.PlayClip(loseSound);
         if (FindObjectsOfType<Ball>().Length > 1) Destroy(gameObject);
         else CorrectPaddleCollision();
         gameSession.RetractBall();

@@ -5114,6 +5114,48 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95506d08f10b8ce439543db45d2460be, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1001 &2040747560
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094353956264856, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f0c89d071d21da3449b8b0dfa8362a67, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!4 &2042834509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4196453672899516, guid: 95506d08f10b8ce439543db45d2460be,

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4196453672899516}
   - component: {fileID: 212027786765005878}
   - component: {fileID: 114315733966659414}
-  - component: {fileID: 61406494147452616}
+  - component: {fileID: 60289455084131200}
   m_Layer: 0
   m_Name: Brick
   m_TagString: Brick
@@ -42,8 +42,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61406494147452616
-BoxCollider2D:
+--- !u!60 &60289455084131200
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -64,9 +64,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.29, y: 0.4}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.64, y: 0.19999999}
+      - {x: -0.64, y: -0.19999999}
+      - {x: 0.64, y: -0.19999999}
+      - {x: 0.64, y: 0.19999999}
 --- !u!114 &114315733966659414
 MonoBehaviour:
   m_ObjectHideFlags: 1

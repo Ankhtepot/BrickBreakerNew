@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4392786277035698}
   - component: {fileID: 212718288411023128}
-  - component: {fileID: 61486086586199710}
   - component: {fileID: 114290366640659558}
   - component: {fileID: 50457443557048872}
+  - component: {fileID: 60127634720123312}
   m_Layer: 0
   m_Name: PhysicalBlock
   m_TagString: Brick
@@ -63,8 +63,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61486086586199710
-BoxCollider2D:
+--- !u!60 &60127634720123312
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -85,9 +85,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.28, y: 1.28}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.64, y: 0.64}
+      - {x: -0.64, y: -0.64}
+      - {x: 0.64, y: -0.64}
+      - {x: 0.64, y: 0.64}
 --- !u!114 &114290366640659558
 MonoBehaviour:
   m_ObjectHideFlags: 1

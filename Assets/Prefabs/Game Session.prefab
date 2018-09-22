@@ -142,24 +142,9 @@ GameObject:
   - component: {fileID: 222450217088021660}
   - component: {fileID: 114434957271332010}
   - component: {fileID: 114817739675831832}
+  - component: {fileID: 114299600298709496}
   m_Layer: 5
   m_Name: ResetBallsButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1692287231334840
-GameObject:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 224339334141356388}
-  - component: {fileID: 114772618193735530}
-  m_Layer: 5
-  m_Name: ResetLogic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,10 +210,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brickCount: 0
   ballCount: 0
-  Lives: 50
+  Lives: 5
   basePaddleBallRelation: {x: 0, y: 0.8, z: 0}
   checkForBricks: 1
   LivesText: {fileID: 114541155846442350}
+  xMin: 3.5
+  xMax: 6.7
+  yMin: 0
+  yMax: 5.1
+  MovementSpeed: 1
 --- !u!114 &114041794572283340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -405,6 +395,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114299600298709496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1648371803389876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 520b3050542d90443a651463a0620df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resetEnableDelay: 2
 --- !u!114 &114434957271332010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -790,17 +792,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114772618193735530
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1692287231334840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 520b3050542d90443a651463a0620df8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114817739675831832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -840,7 +831,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114772618193735530}
+      - m_Target: {fileID: 114299600298709496}
         m_MethodName: ResetBall
         m_Mode: 1
         m_Arguments:
@@ -951,7 +942,6 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 224283728816534518}
-  - {fileID: 224339334141356388}
   m_Father: {fileID: 224788164072168086}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -996,24 +986,6 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -1.9000015, y: 18}
   m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &224339334141356388
-RectTransform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1692287231334840}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 224116619779633004}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224450499079444090
 RectTransform:

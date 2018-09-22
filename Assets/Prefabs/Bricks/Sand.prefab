@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4348705748810702}
   - component: {fileID: 212624864704450758}
   - component: {fileID: 114570710131022016}
-  - component: {fileID: 61234344022419184}
+  - component: {fileID: 60539963522660436}
   m_Layer: 0
   m_Name: Sand
   m_TagString: Brick
@@ -42,8 +42,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61234344022419184
-BoxCollider2D:
+--- !u!60 &60539963522660436
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -64,9 +64,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.28, y: 0.41}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.64, y: 0.205}
+      - {x: -0.64, y: -0.205}
+      - {x: 0.64, y: -0.205}
+      - {x: 0.64, y: 0.205}
 --- !u!114 &114570710131022016
 MonoBehaviour:
   m_ObjectHideFlags: 1

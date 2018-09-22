@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4058313758141508}
   - component: {fileID: 212931005221117134}
-  - component: {fileID: 61004861558410556}
   - component: {fileID: 114290586172764646}
+  - component: {fileID: 60218753013594080}
   m_Layer: 0
   m_Name: Techno1
   m_TagString: Brick
@@ -42,8 +42,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61004861558410556
-BoxCollider2D:
+--- !u!60 &60218753013594080
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -64,9 +64,16 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.28, y: 1.28}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.61, y: 0.64}
+      - {x: -0.64, y: 0.61}
+      - {x: -0.64, y: -0.59999996}
+      - {x: -0.59999996, y: -0.64}
+      - {x: 0.61, y: -0.64}
+      - {x: 0.64, y: -0.61}
+      - {x: 0.64, y: 0.58}
+      - {x: 0.58, y: 0.64}
 --- !u!114 &114290586172764646
 MonoBehaviour:
   m_ObjectHideFlags: 1

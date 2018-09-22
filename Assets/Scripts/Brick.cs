@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Assets.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Brick : MonoBehaviour {
+public class Brick : MonoBehaviour, IBrickPlayList {
 
     [SerializeField] int hitPoints = 0;
     [SerializeField] Sprite[] damageSprites;
@@ -17,7 +18,6 @@ public class Brick : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        currentLevel = FindObjectOfType<GameSession>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         pickupManager = FindObjectOfType<PickupManager>();
         //destroyEffect = GetComponent<ParticleSystem>();
@@ -32,7 +32,7 @@ public class Brick : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         //print("Collided with " + collision.gameObject.tag + " Name: " + collision.gameObject.name);
-        if (collision.gameObject.tag != "Brick") {
+        if (collision.gameObject.tag != "Brick" ) {
             if (tag != "Unbreakable") {
                 DamageBrick();
             }
@@ -40,23 +40,18 @@ public class Brick : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        print("Brick: Trigger fired with " + collision.tag + " Name: " + collision.name);
+        //print("Brick: Trigger fired with " + collision.tag + " Name: " + collision.name);
         if (collision.tag == "Fireball" || collision.tag == "LoseCollider") {
             destroyBrick();
         }
         if ((collision.tag == "Projectile" && tag != "Unbreakable")) {
             DamageBrick();
         }
-            
-
-        //else if (tag != "Unbreakable") {
-        //    DamageBrick();
-        //}
     }
 
     public void DamageBrick() {
         hitPoints--;
-        if (hitPoints <= 0) {
+        if (hitPoints < 0) {
             destroyBrick();
         } else {
             if (damageSprites[hitPoints]) {
@@ -77,8 +72,7 @@ public class Brick : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    private void OnDestroy() {
-
+    public SoundSystem.PlayListID GetPlayListID() {
+        return SoundSystem.PlayListID.Brick;
     }
-
 }

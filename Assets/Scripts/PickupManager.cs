@@ -4,17 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PickupManager : MonoBehaviour {
-
+    [Header("Setup")]
     [SerializeField] GameObject[] ListOfUsedPickups;
     [SerializeField] float PickupDropChance = 0.7f;
+    [Header("Glue setup")]
     [SerializeField] float GlueDuration = 10f;
+    [Header("Laser setup")]
     [SerializeField] float LaserDuration = 10f;
+    [SerializeField] MagicShot magicShot;
+    [SerializeField] float MagicShotYOffset = 0.2f;
+    [Header("Fireball setup")]
     [SerializeField] float FireballDuration = 10f;
     [SerializeField] Sprite FireballSprite;
     [SerializeField] Sprite NormalBallSprite;
+    [Header("Enlarge setup")]
     [SerializeField] float EnlargeDuration = 10f;
-    [SerializeField] MagicShot magicShot;
-    [SerializeField] float MagicShotYOffset = 0.2f;
+    [Header("Multiple setup")]    
     [SerializeField] int MaxBallsSpawnedAtOnce = 10;
     //[SerializeField] Fireball fireball;
     //[SerializeField] int GlueCount = 0;
@@ -83,11 +88,12 @@ public class PickupManager : MonoBehaviour {
         foreach (Ball ball in FindObjectsOfType<Ball>()) {
             ball.GetComponent<SpriteRenderer>().sprite = FireballSprite;
             ball.tag = "Fireball";
-            ball.GetComponentInChildren<ParticleSystem>().Play();
+            foreach(ParticleSystem effect in ball.GetComponentsInChildren<ParticleSystem>())
+                effect.Play();
             //ball.GetComponent<CircleCollider2D>().isTrigger = true;
         }
         foreach(Brick brick in FindObjectsOfType<Brick>()) {
-            brick.GetComponent<BoxCollider2D>().isTrigger = true;
+            brick.GetComponent<PolygonCollider2D>().isTrigger = true;
         }
         FireballCount++;
         
@@ -99,10 +105,11 @@ public class PickupManager : MonoBehaviour {
             foreach (Ball ball in FindObjectsOfType<Ball>()) {
                 ball.GetComponent<SpriteRenderer>().sprite = NormalBallSprite;
                 ball.tag = "Ball";
-                ball.GetComponentInChildren<ParticleSystem>().Stop();
+                foreach (ParticleSystem effect in ball.GetComponentsInChildren<ParticleSystem>())
+                    effect.Stop();
             }
             foreach (Brick brick in FindObjectsOfType<Brick>()) {
-                brick.GetComponent<BoxCollider2D>().isTrigger = false;
+                brick.GetComponent<PolygonCollider2D>().isTrigger = false;
             }
             //Debug.Log("Suspending Fireball");
         }
@@ -140,12 +147,13 @@ public class PickupManager : MonoBehaviour {
         if (gameSession.BallAmount() < MaxBallsSpawnedAtOnce + 1) {
             Ball[] balls = FindObjectsOfType<Ball>();
             //Debug.Log("ActivateMultiple(): number of balls in a field: " + balls.Length);
-            foreach (Ball ball in balls) {
+            foreach (Ball oldBall in balls) {
                 for (int i = 0; i < 3; i++) {
-                    Vector2 spawnPosition = new Vector2(Mathf.Clamp(ball.transform.position.x + i + 0.2f, 1, 15), Mathf.Clamp(ball.transform.position.y + i + 0.2f, 1, 11));
+                    Vector2 spawnPosition = new Vector2(Mathf.Clamp(oldBall.transform.position.x + i/10 + 0.2f, 1, 15), Mathf.Clamp(oldBall.transform.position.y + i + 0.2f, 1, 11));
+                    //Vector3 altSpawnPosition = new Vector2(UnityEngine.Random.Range(0.2f, 0.5f), UnityEngine.Random.Range(0.2f, 0.5f));
                     if (FindObjectsOfType<Ball>().Length < MaxBallsSpawnedAtOnce + 1) {
-                        Ball newBall = Instantiate(ball, spawnPosition, Quaternion.identity);
-                        newBall.GetComponent<Rigidbody2D>().velocity = ball.GetComponent<Rigidbody2D>().velocity;
+                        Ball newBall = Instantiate(oldBall, spawnPosition, Quaternion.identity);
+                        newBall.GetComponent<Rigidbody2D>().velocity = oldBall.GetComponent<Rigidbody2D>().velocity;
                         //Debug.Log("ActivateMultiple(): Spawned new Ball, balls total: " + gameSession.BallAmount());
                     }
                 }
@@ -157,6 +165,7 @@ public class PickupManager : MonoBehaviour {
         if (!isLaserActive) {
             foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {
                 ball.GetComponent<SpriteRenderer>().enabled = true;
+                //ball.GetComponent<Animator>().Play("MB arrival");
             }
         }
         LaserCount++;
@@ -167,11 +176,17 @@ public class PickupManager : MonoBehaviour {
         LaserCount--; //print("Laser Count= " + LaserCount);
         if (LaserCount <= 0) {
             foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {
+                //StartCoroutine(VanishLaser(ball.GetComponent<Animator>()));
                 ball.GetComponent<SpriteRenderer>().enabled = false;
             }
             //Debug.Log("Suspending Laser");
             isLaserActive = false;
         }
+    }
+
+    IEnumerator VanishLaser(Animator anim) {
+        anim.SetTrigger("Vanish");
+        yield return new WaitForSeconds(1f);
     }
 
     private void ActivateLife() {

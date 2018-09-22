@@ -7,19 +7,22 @@ using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour {
 
-	[SerializeField] int brickCount = 0;
+    [SerializeField] int brickCount = 0;
     [SerializeField] int ballCount = 0;
     [SerializeField] int Lives = 3;
     [SerializeField] public Vector3 basePaddleBallRelation;
     [SerializeField] bool checkForBricks = true;
-    
+    [SerializeField] TextMeshProUGUI LivesText;
+    //[SerializeField] float xMinKe;
+    [Header("ShakerProps")]
+    [Range(0, 10)][SerializeField] float xMin = 3f;
+    [Range(0, 10)][SerializeField] float xMax = 6f;
+    [Range(0, 10)][SerializeField] float yMin = 0f;
+    [Range(0, 10)][SerializeField] float yMax = 5f;
 
     static GameSession instance = null;
-    [SerializeField] TextMeshProUGUI LivesText;
     bool brickCheckCDIsOff = true;
-    int sceneCount;
-
-    List<string> notLevelScenes = new List<string>{"Start Screen","Win Screen","Game Over" };
+    List<string> notLevelScenes = new List<string> { "Start Screen", "Win Screen", "Game Over" };
 
     private void Start() {
         if (instance != null && instance != this) {
@@ -29,8 +32,6 @@ public class GameSession : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad(this);
         }
-        sceneCount = SceneManager.sceneCount;
-        Scene activeScene = SceneManager.GetActiveScene();
         if (!currentSceneIsLevel()) {
             if (LivesText) LivesText.enabled = false;
         }
@@ -38,15 +39,32 @@ public class GameSession : MonoBehaviour {
     }
 
     private void Update() {
-        while(checkForBricks && brickCheckCDIsOff) {
+        ScreenShake();
+        while (checkForBricks && brickCheckCDIsOff) {
             StartCoroutine(checkBrickCount());
+        }
+    }
+
+    private void ScreenShake() {
+        
+        if (Input.GetButtonDown("Jump")) {
+            print("Jump button pressed");
+            Animator shakeAnimation = FindObjectOfType<Camera>().GetComponent<Animator>();
+            if (shakeAnimation) {
+                shakeAnimation.SetTrigger("ShakeCamera");
+                foreach (Ball ball in FindObjectsOfType<Ball>()) {
+                    ball.GetComponent<Rigidbody2D>().velocity +=
+                        new Vector2(UnityEngine.Random.Range(xMin, xMax),
+                        UnityEngine.Random.Range(yMin, yMax));
+                }
+            }
         }
     }
 
     private IEnumerator checkBrickCount() {
         brickCheckCDIsOff = false;
         yield return new WaitForSeconds(2f);
-        print("Update: Checking if all bricks are gone.");
+        //print("Update: Checking if all bricks are gone.");
         NextLevelIfBricksAreAllGone();
         brickCheckCDIsOff = true;
     }
@@ -57,7 +75,7 @@ public class GameSession : MonoBehaviour {
 
     public void RetractBall() {
         ballCount = BallAmount();
-        if(ballCount <= 1) RetractLife();
+        if (ballCount <= 1) RetractLife();
     }
 
     public int BallAmount() {
@@ -65,10 +83,10 @@ public class GameSession : MonoBehaviour {
     }
 
     private void NextLevelIfBricksAreAllGone() {
-        if(CountBricks()<=0) {
-            Debug.Log("All bricks gone, loading next screen");
+        if (CountBricks() <= 0) {
+            //Debug.Log("All bricks gone, loading next screen");
             SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
-            if(currentSceneIsLevel()) sceneLoader.LoadNextScene();
+            if (currentSceneIsLevel()) sceneLoader.LoadNextScene();
         }
     }
 
@@ -94,7 +112,7 @@ public class GameSession : MonoBehaviour {
     private int CountBricks() {
         //print("In count bricks");
         int counter = 0;
-        foreach(Brick brick in FindObjectsOfType<Brick>()) {
+        foreach (Brick brick in FindObjectsOfType<Brick>()) {
             if (brick.tag == "Brick") counter++;
         }
         brickCount = counter;

@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4963825039765840}
   - component: {fileID: 212556797640470602}
-  - component: {fileID: 61394491771559362}
   - component: {fileID: 114764560580011308}
+  - component: {fileID: 60121129452343744}
   m_Layer: 0
   m_Name: Block
   m_TagString: Brick
@@ -42,8 +42,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61394491771559362
-BoxCollider2D:
+--- !u!60 &60121129452343744
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -64,9 +64,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.28, y: 1.28}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.64, y: 0.64}
+      - {x: -0.64, y: -0.64}
+      - {x: 0.64, y: -0.64}
+      - {x: 0.64, y: 0.64}
 --- !u!114 &114764560580011308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,9 +83,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 0
   damageSprites:
-  - {fileID: 21300090, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
-  - {fileID: 21300084, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
-  - {fileID: 21300082, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
+  - {fileID: 21300114, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
+  - {fileID: 21300124, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
+  - {fileID: 21300122, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
   destroyEffect: {fileID: 198824387381982774, guid: a6c48e8859da1604d9a256578d1a7a91,
     type: 2}
 --- !u!212 &212556797640470602

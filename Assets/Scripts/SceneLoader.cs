@@ -5,19 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
 
-    //private void Start() {
-    //    Scene[] scenes = SceneManager.GetAllScenes();
-    //    for (int i = 0; i < scenes.Length; i++) {
-    //        print("Scene " + i + ": " + scenes[i].name + "\n");
-    //    }
-    //}
+    [SerializeField] int sceneToReturnTo;
 
     public void LoadNextScene() {
-        
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log("Loading nextScreen index= " + (currentSceneIndex+1));
+        //Debug.Log("Loading nextScreen index= " + (currentSceneIndex+1));
         SceneManager.LoadScene(currentSceneIndex + 1);
-
     }
 
 	public void LoadFirstScene() {
@@ -30,6 +23,10 @@ public class SceneLoader : MonoBehaviour {
     }
 
     public void LoadGameOverScene() {
-        SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+        SceneManager.LoadScene("Game Over");
+    }
+
+    public void ManageCreditsSceneView() {
+        SceneManager.LoadScene("Credits scene");
     }
 }

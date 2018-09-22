@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4558414667533004}
   - component: {fileID: 212184923520258400}
   - component: {fileID: 114638131646062594}
-  - component: {fileID: 61827799846133854}
+  - component: {fileID: 60924723100549270}
   m_Layer: 0
   m_Name: Unbreakable Brick
   m_TagString: Unbreakable
@@ -42,15 +42,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61827799846133854
-BoxCollider2D:
+--- !u!60 &60924723100549270
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1642369113668580}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 11c4a92aabaa5c345952c175f5b5db85, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -64,9 +64,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.28, y: 0.4}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.64, y: 0.19999999}
+      - {x: -0.64, y: -0.19999999}
+      - {x: 0.64, y: -0.19999999}
+      - {x: 0.64, y: 0.19999999}
 --- !u!114 &114638131646062594
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -26,7 +26,7 @@ TagManager:
   - MagicShot
   - Ball
   - Unbreakable
-  - 
+  - Obstacle
   - 
   - 
   - 
@@ -56,4 +56,7 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 817406469
+    locked: 0
+  - name: Upper
+    uniqueID: 4276011567
     locked: 0
