@@ -48,7 +48,7 @@ public class GameSession : MonoBehaviour {
     private void ScreenShake() {
         
         if (Input.GetButtonDown("Jump")) {
-            print("Jump button pressed");
+            //print("Jump button pressed");
             Animator shakeAnimation = FindObjectOfType<Camera>().GetComponent<Animator>();
             if (shakeAnimation) {
                 shakeAnimation.SetTrigger("ShakeCamera");
@@ -93,6 +93,8 @@ public class GameSession : MonoBehaviour {
     public void AddLife() {
         Lives++;
         UpdateLivesText();
+        Animator paddle = FindObjectOfType<LifeAdjustment>().GetComponent<Animator>();
+        if (paddle) paddle.SetTrigger("Plus");
     }
 
     public void RetractLife() {
@@ -100,6 +102,8 @@ public class GameSession : MonoBehaviour {
             FindObjectOfType<SceneLoader>().LoadGameOverScene();
         } else {
             Lives--;
+            Animator paddle = FindObjectOfType<LifeAdjustment>().GetComponent<Animator>();
+            if (paddle) paddle.SetTrigger("Minus");
             UpdateLivesText();
         }
         //Debug.Log("GameSession: RetractLife: afterRetract, Lives = " + Lives);

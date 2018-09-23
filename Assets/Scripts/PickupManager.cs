@@ -105,8 +105,10 @@ public class PickupManager : MonoBehaviour {
             foreach (Ball ball in FindObjectsOfType<Ball>()) {
                 ball.GetComponent<SpriteRenderer>().sprite = NormalBallSprite;
                 ball.tag = "Ball";
-                foreach (ParticleSystem effect in ball.GetComponentsInChildren<ParticleSystem>())
-                    effect.Stop();
+                foreach (ParticleSystem effect in ball.GetComponentsInChildren<ParticleSystem>()) { 
+                    //print("PickupManager: ActivateFireball: effect name to switch off: " + effect.name);
+                    if(effect.name != "sparkles") effect.Stop();
+                }
             }
             foreach (Brick brick in FindObjectsOfType<Brick>()) {
                 brick.GetComponent<PolygonCollider2D>().isTrigger = false;
@@ -118,7 +120,8 @@ public class PickupManager : MonoBehaviour {
     IEnumerator ActivateEnlarge() {
         if (!isEnlargeActive) {
             foreach (EnlargeShield shield in FindObjectsOfType<EnlargeShield>()) {
-                shield.GetComponent<SpriteRenderer>().enabled = true;
+                //shield.GetComponent<SpriteRenderer>().enabled = true;
+                shield.GetComponent<Animator>().SetTrigger("Arrive");
                 shield.GetComponent<PolygonCollider2D>().enabled = true;
             }
         }
@@ -130,8 +133,8 @@ public class PickupManager : MonoBehaviour {
         EnlargeCount--; //print("Laser Count= " + LaserCount);
         if (EnlargeCount <= 0) {
             foreach (EnlargeShield shield in FindObjectsOfType<EnlargeShield>()) {
-                
-                shield.GetComponent<SpriteRenderer>().enabled = false;
+                shield.GetComponent<Animator>().SetTrigger("Vanish");
+                //shield.GetComponent<SpriteRenderer>().enabled = false;
                 shield.GetComponent<PolygonCollider2D>().enabled = false;
             }
             //Debug.Log("Suspending Laser");
@@ -139,9 +142,7 @@ public class PickupManager : MonoBehaviour {
         }
     }
 
-    private void SwitchSpriteOff<T>() where T:Component {
-        FindObjectOfType<T>().GetComponent<SpriteRenderer>().enabled = false;
-    }
+    
 
     private void ActivateMultiple() {
         if (gameSession.BallAmount() < MaxBallsSpawnedAtOnce + 1) {
@@ -153,6 +154,7 @@ public class PickupManager : MonoBehaviour {
                     //Vector3 altSpawnPosition = new Vector2(UnityEngine.Random.Range(0.2f, 0.5f), UnityEngine.Random.Range(0.2f, 0.5f));
                     if (FindObjectsOfType<Ball>().Length < MaxBallsSpawnedAtOnce + 1) {
                         Ball newBall = Instantiate(oldBall, spawnPosition, Quaternion.identity);
+                        if (oldBall.isGlueApplied) newBall.isGlueApplied = true;
                         newBall.GetComponent<Rigidbody2D>().velocity = oldBall.GetComponent<Rigidbody2D>().velocity;
                         //Debug.Log("ActivateMultiple(): Spawned new Ball, balls total: " + gameSession.BallAmount());
                     }
@@ -163,9 +165,8 @@ public class PickupManager : MonoBehaviour {
 
     IEnumerator ActivateLaser() {
         if (!isLaserActive) {
-            foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {
-                ball.GetComponent<SpriteRenderer>().enabled = true;
-                //ball.GetComponent<Animator>().Play("MB arrival");
+            foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {                
+                ball.GetComponent<Animator>().SetTrigger("Arrive");
             }
         }
         LaserCount++;
@@ -176,18 +177,17 @@ public class PickupManager : MonoBehaviour {
         LaserCount--; //print("Laser Count= " + LaserCount);
         if (LaserCount <= 0) {
             foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {
-                //StartCoroutine(VanishLaser(ball.GetComponent<Animator>()));
-                ball.GetComponent<SpriteRenderer>().enabled = false;
+                ball.GetComponent<Animator>().SetTrigger("Vanish");
             }
             //Debug.Log("Suspending Laser");
             isLaserActive = false;
         }
     }
 
-    IEnumerator VanishLaser(Animator anim) {
-        anim.SetTrigger("Vanish");
-        yield return new WaitForSeconds(1f);
-    }
+    //IEnumerator VanishLaser(Animator anim) {
+    //    anim.SetTrigger("Vanish");
+    //    yield return new WaitForSeconds(1f);
+    //}
 
     private void ActivateLife() {
         //Debug.Log("PickupManager: Activating addLife");
@@ -195,20 +195,34 @@ public class PickupManager : MonoBehaviour {
     }
 
     IEnumerator ActivateGlue() {
-        FindObjectOfType<GlueActiveEffect>().GetComponent<SpriteRenderer>().enabled = true;
+        GlueActiveEffect glueEffectOnPaddle = FindObjectOfType<GlueActiveEffect>();
+        if (glueEffectOnPaddle) {
+            glueEffectOnPaddle.GetComponent<SpriteRenderer>().enabled = true;
+            glueEffectOnPaddle.GetComponent<ParticleSystem>().Play(); 
+        }
         GlueCount++;
-        FindObjectOfType<Ball>().isGlueApplied = true;
+        foreach (Ball ball in FindObjectsOfType<Ball>()) {
+            ball.isGlueApplied = true;            
+        }
+
         //print("Start waiting" + Time.time);
         yield return new WaitForSeconds(GlueDuration);
         //print("End of waiting" + Time.time);
         GlueCount--;
         if (GlueCount <= 0) {
-            SwitchSpriteOff<GlueActiveEffect>();
+            if (glueEffectOnPaddle) {
+                glueEffectOnPaddle.GetComponent<ParticleSystem>().Stop();
+                SwitchSpriteOff<GlueActiveEffect>(); 
+            }
             //Debug.Log("Suspending Glue");
-            FindObjectOfType<Ball>().isGlueApplied = false;
+            foreach (Ball ball in FindObjectsOfType<Ball>()) {
+                ball.isGlueApplied = false;                
+            }
         }
     }
 
-
+    private void SwitchSpriteOff<T>() where T : Component {
+        FindObjectOfType<T>().GetComponent<SpriteRenderer>().enabled = false;
+    }
 
 }

@@ -22,13 +22,13 @@ public class Paddle : MonoBehaviour {
 
     private static void SwitchOffPickupSprites() {
         FindObjectOfType<GlueActiveEffect>().GetComponent<SpriteRenderer>().enabled = false;
-        foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {
-            ball.GetComponent<SpriteRenderer>().enabled = false;
-        }
-        foreach (EnlargeShield shield in FindObjectsOfType<EnlargeShield>()) {
-            shield.GetComponent<SpriteRenderer>().enabled = false;
-            shield.GetComponent<PolygonCollider2D>().enabled = false;
-        }
+        //foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {
+        //    ball.GetComponent<SpriteRenderer>().enabled = false;
+        //}
+        //foreach (EnlargeShield shield in FindObjectsOfType<EnlargeShield>()) {
+        //    shield.GetComponent<SpriteRenderer>().enabled = false;
+        //    shield.GetComponent<PolygonCollider2D>().enabled = false;
+        //}
     }
 
     // Update is called once per frame

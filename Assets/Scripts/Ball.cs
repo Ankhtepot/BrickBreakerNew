@@ -30,10 +30,10 @@ public class Ball : MonoBehaviour {
         gameSession = FindObjectOfType<GameSession>();
         SFXPlayer = FindObjectOfType<SoundSystem>();
         //if (SFXPlayer) print("Ball: SFXPlayer assigned");
-        basePaddleBallRelation = gameSession.basePaddleBallRelation;
+        if(gameSession) basePaddleBallRelation = gameSession.basePaddleBallRelation;
         PaddleBallRelation = basePaddleBallRelation;
         //print("PaddleBallRelation: " + PaddleBallRelation.ToString());
-        gameSession.AddBall();
+        if(gameSession) gameSession.AddBall();
         ManageFireballOnStart();
         if (isOtherBallPresent()) hasStarted = true;
     }
@@ -50,6 +50,9 @@ public class Ball : MonoBehaviour {
             lockToPaddle();
             launchOnClick();
         }
+        Vector2 dir = GetComponent<Rigidbody2D>().velocity;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void launchOnClick() {
@@ -75,11 +78,12 @@ public class Ball : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         String collisionTag = collision.gameObject.tag;
         if (collisionTag == "Paddle" && isGlueApplied) LockingToPaddle(collision);
-        PlaySFX(collision);
+        PlaySFX(collision.gameObject);
         TweakVelocity();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        PlaySFX(collision.gameObject);
         if (collision.tag == "LoseCollider") {
             //Debug.Log("Ball Triggerers LoseCollider");
             ManageLoseCollider();
@@ -99,19 +103,19 @@ public class Ball : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity += tweak;
     }
 
-    private void PlaySFX(Collision2D collision) {
+    private void PlaySFX(GameObject objectOfCollision) {
         //Debug.Log("Ball collides with " + collision.gameObject.tag);
         if (SFXPlayer && SFXPlayer.GetVolume() != 0f) {
             //print("Ball: PlaySFX: collision.tag: " + collision.gameObject.tag);
-            switch (collision.gameObject.tag) {
+            switch (objectOfCollision.tag) {
                 case "Unbreakable": SFXPlayer.PlayClip(unbreakableSound); break;
                 case "Paddle": SFXPlayer.PlayClip(paddleSound); break;
                 case "Wall": SFXPlayer.PlayClip(wallBounceSound); break;
                 //case "LoseColider": AudioSource.PlayClipAtPoint(loseSound,transform.position, SFXPlayer.GetVolume()); break;                
                 default: {
-                        IBrickPlayList B = collision.gameObject.GetComponent<Brick>();
+                        IBrickPlayList B = objectOfCollision.GetComponent<Brick>();
                         if (B != null) {
-                            print("Ball: PlaySFX: collision.gameObject is Brick class, PlayListID is: " + B.GetPlayListID().ToString());
+                            //print("Ball: PlaySFX: collision.gameObject is Brick class, PlayListID is: " + B.GetPlayListID().ToString());
                             SFXPlayer.PlayRandomSoundFromList(B.GetPlayListID());
                         } else SFXPlayer.PlayRandomSoundFromList(SoundSystem.PlayListID.Brick);
                             }; break;
@@ -120,11 +124,11 @@ public class Ball : MonoBehaviour {
     }
 
     private void ManageLoseCollider() {
-        print("Should play lose sound");
+        //print("Should play lose sound");
         if(SFXPlayer) SFXPlayer.PlayClip(loseSound);
         if (FindObjectsOfType<Ball>().Length > 1) Destroy(gameObject);
         else CorrectPaddleCollision();
-        gameSession.RetractBall();
+        if(gameSession) gameSession.RetractBall();
     }
 
     private void LockingToPaddle(Collision2D collision) {
