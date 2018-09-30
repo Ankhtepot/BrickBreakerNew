@@ -9,35 +9,40 @@ public class Paddle : MonoBehaviour {
     [SerializeField] float bottomConstraint = 0.63f;
     [SerializeField] bool autoPlay = false;
     [SerializeField] float ZTransformPosition = -5f;
+    [SerializeField] float movementDirection;
 
     //cached variables
     float mouseXInWU;
     Ball ball;
 
-    // Use this for initialization
+    float xPos;
+
     void Start() {
         SwitchOffPickupSprites();
         ball = FindObjectOfType<Ball>();
+        xPos = transform.position.x;
     }
 
     private static void SwitchOffPickupSprites() {
         FindObjectOfType<GlueActiveEffect>().GetComponent<SpriteRenderer>().enabled = false;
-        //foreach (MagicBall ball in FindObjectsOfType<MagicBall>()) {
-        //    ball.GetComponent<SpriteRenderer>().enabled = false;
-        //}
-        //foreach (EnlargeShield shield in FindObjectsOfType<EnlargeShield>()) {
-        //    shield.GetComponent<SpriteRenderer>().enabled = false;
-        //    shield.GetComponent<PolygonCollider2D>().enabled = false;
-        //}
     }
 
-    // Update is called once per frame
     void Update() {
-         if(autoPlay) {
+        if (autoPlay) {
             Autoplay();
         } else {
             MoveWithMouse();
         }
+        RegisterMovementOnX();
+    }
+
+    private void RegisterMovementOnX() {
+        if (xPos != transform.position.x) movementDirection = transform.position.x - xPos;
+        xPos = transform.position.x;
+    }
+
+    public float GetMovementProps() {
+        return movementDirection;
     }
 
     private void Autoplay() {

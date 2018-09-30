@@ -2872,6 +2872,58 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f37f1a6d45aab24cbbe5d20daa0a7a8, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1001 &1536321483
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417395266942462, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 198341228361503430, guid: d11016191a5a0a544b314d7431a87430,
+        type: 2}
+      propertyPath: UVModule.tilesX
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 198341228361503430, guid: d11016191a5a0a544b314d7431a87430,
+        type: 2}
+      propertyPath: UVModule.startFrame.minScalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d11016191a5a0a544b314d7431a87430, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!4 &1552685965 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4196453672899516, guid: 95506d08f10b8ce439543db45d2460be,
@@ -4057,7 +4109,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b916a02241cd99d48b80d427e0aebf83, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 641b9d60f5375734b845092e5db2fb46, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

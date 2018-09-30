@@ -77,9 +77,19 @@ public class Ball : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         String collisionTag = collision.gameObject.tag;
-        if (collisionTag == "Paddle" && isGlueApplied) LockingToPaddle(collision);
+        CollisionWithPaddle(collision, collisionTag);
         PlaySFX(collision.gameObject);
         TweakVelocity();
+    }
+
+    private void CollisionWithPaddle(Collision2D collision, string collisionTag) {
+        if (collisionTag == "Paddle") { 
+            if(isGlueApplied) LockingToPaddle(collision);
+            float paddleMovement = paddle1.GetMovementProps() * 10;
+            Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
+            print("Ball: Adding to velocity: paddleMovement: " + paddleMovement);
+            velocity += new Vector2(paddleMovement, 0);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

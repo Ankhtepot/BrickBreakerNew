@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable 0168
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -25,6 +27,7 @@ public class GameSession : MonoBehaviour {
     List<string> notLevelScenes = new List<string> { "Start Screen", "Win Screen", "Game Over" };
 
     private void Start() {
+        SceneManager.sceneLoaded += OnSceneLoad;
         if (instance != null && instance != this) {
             //print("Destroying duplicate GameSession");
             Destroy(gameObject);
@@ -127,5 +130,13 @@ public class GameSession : MonoBehaviour {
     private bool currentSceneIsLevel() {
         if (notLevelScenes.Contains(SceneManager.GetActiveScene().name)) return false;
         return true;
+    }
+
+    private void OnSceneLoad(Scene loadedScene, LoadSceneMode mode) {
+
+    }
+
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= OnSceneLoad;
     }
 }

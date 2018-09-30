@@ -463,6 +463,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 35a5a762dafd0f045ac04c754db4d6f6, type: 3}
   AppleSounds:
   - {fileID: 8300000, guid: 6f7459e3bc303074aa7cee4df3fd3a82, type: 3}
+  - {fileID: 8300000, guid: 735aaa52cd04c7c46990156498779531, type: 3}
+  - {fileID: 8300000, guid: 1ff76d8467a25e243b4fefcc8762bfbc, type: 3}
+  - {fileID: 8300000, guid: d9d8d7ca5cbf4af4c92569a4fedcbb64, type: 3}
 --- !u!222 &222491110605707728
 CanvasRenderer:
   m_ObjectHideFlags: 1

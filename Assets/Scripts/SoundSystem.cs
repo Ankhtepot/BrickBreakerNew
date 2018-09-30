@@ -12,19 +12,19 @@ public class SoundSystem : MonoBehaviour {
     [SerializeField] AudioClip[] AppleSounds;
 
     AudioSource audioSource;
-    static SoundSystem instance = null;
+   // static SoundSystem instance = null;
 
     public enum PlayListID { Brick, Apple }
 
     // Use this for initialization
     void Start() {
-        if (instance != null && instance != this) {
-            print("Destroying duplicate MusicPlayer");
-            Destroy(gameObject);
-        } else {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
+        //if (instance != null && instance != this) {
+        //    print("Destroying duplicate MusicPlayer");
+        //    Destroy(gameObject);
+        //} else {
+        //    instance = this;
+        //    DontDestroyOnLoad(this);
+        //}
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = baseVolume;
         //print("MusicPlayer is now active");

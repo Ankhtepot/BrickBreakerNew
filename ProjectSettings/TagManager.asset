@@ -15,6 +15,7 @@ TagManager:
   - Projectile
   - Fireball
   - DontMute
+  - CheckBox
   layers:
   - Default
   - TransparentFX

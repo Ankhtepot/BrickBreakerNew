@@ -85,7 +85,7 @@ MonoBehaviour:
   damageSprites:
   - {fileID: 21300068, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
   - {fileID: 21300070, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
-  destroyEffect: {fileID: 198824387381982774, guid: a6c48e8859da1604d9a256578d1a7a91,
+  destroyEffect: {fileID: 198729766819054972, guid: 28444a5dc5031b5438be5737edac8388,
     type: 2}
 --- !u!212 &212027786765005878
 SpriteRenderer:

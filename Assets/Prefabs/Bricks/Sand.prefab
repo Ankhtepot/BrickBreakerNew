@@ -86,7 +86,7 @@ MonoBehaviour:
   - {fileID: 21300028, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
   - {fileID: 21300036, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
   - {fileID: 21300042, guid: 237c42e4b3132a1419d9bd4fa4f3562b, type: 3}
-  destroyEffect: {fileID: 198824387381982774, guid: a6c48e8859da1604d9a256578d1a7a91,
+  destroyEffect: {fileID: 198341228361503430, guid: d11016191a5a0a544b314d7431a87430,
     type: 2}
 --- !u!212 &212624864704450758
 SpriteRenderer:
