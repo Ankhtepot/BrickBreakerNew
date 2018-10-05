@@ -10,11 +10,12 @@ public class SoundSystem : MonoBehaviour {
     [SerializeField] bool muted = false;
     [SerializeField] AudioClip[] BrickSounds;
     [SerializeField] AudioClip[] AppleSounds;
+    [SerializeField] AudioClip[] BossSounds;
 
     AudioSource audioSource;
    // static SoundSystem instance = null;
 
-    public enum PlayListID { Brick, Apple }
+    public enum PlayListID { Brick, Apple, Boss }
 
     // Use this for initialization
     void Start() {
@@ -67,8 +68,17 @@ public class SoundSystem : MonoBehaviour {
             muted = true;
         }
     }
-    public void PlayRandomSoundFromList(PlayListID playList) {
-        if (playList == PlayListID.Apple) PlayClip(AppleSounds[Random.Range(0, AppleSounds.Length)]);
-        if (playList == PlayListID.Brick) PlayClip(BrickSounds[Random.Range(0, BrickSounds.Length)]);
+    public void PlayRandomSoundFromList(PlayListID playListID) {
+        AudioClip[] playList = null;        
+        switch(playListID) {
+            case PlayListID.Apple: playList = AppleSounds; break;
+            case PlayListID.Brick: playList = BrickSounds; break;
+            case PlayListID.Boss: playList = BossSounds; break;
+        }
+        playFromPlayList(playList);
+    }
+
+    private void playFromPlayList(AudioClip[] playList) {
+        PlayClip(playList[Random.Range(0, playList.Length)]);
     }
 }

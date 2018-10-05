@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 
 namespace Assets.Interfaces {
-    interface IBrickPlayList {
+    interface IPlayList {
         SoundSystem.PlayListID GetPlayListID();
     }
 }

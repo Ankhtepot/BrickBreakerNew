@@ -4,10 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Apple : Brick, IBrickPlayList {
+public class Apple : Brick, IPlayList {
 
     new public SoundSystem.PlayListID GetPlayListID() {
-        print("Apple: GetPlayListID reached");
+        //print("Apple: GetPlayListID reached");
         return SoundSystem.PlayListID.Apple;
     }
 }

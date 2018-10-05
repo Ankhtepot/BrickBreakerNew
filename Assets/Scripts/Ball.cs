@@ -51,7 +51,7 @@ public class Ball : MonoBehaviour {
             launchOnClick();
         }
         Vector2 dir = GetComponent<Rigidbody2D>().velocity;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg ;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
@@ -87,7 +87,7 @@ public class Ball : MonoBehaviour {
             if(isGlueApplied) LockingToPaddle(collision);
             float paddleMovement = paddle1.GetMovementProps() * 10;
             Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
-            print("Ball: Adding to velocity: paddleMovement: " + paddleMovement);
+            //print("Ball: Adding to velocity: paddleMovement: " + paddleMovement);
             velocity += new Vector2(paddleMovement, 0);
         }
     }
@@ -123,7 +123,7 @@ public class Ball : MonoBehaviour {
                 case "Wall": SFXPlayer.PlayClip(wallBounceSound); break;
                 //case "LoseColider": AudioSource.PlayClipAtPoint(loseSound,transform.position, SFXPlayer.GetVolume()); break;                
                 default: {
-                        IBrickPlayList B = objectOfCollision.GetComponent<Brick>();
+                        IPlayList B = objectOfCollision.GetComponent<Brick>();
                         if (B != null) {
                             //print("Ball: PlaySFX: collision.gameObject is Brick class, PlayListID is: " + B.GetPlayListID().ToString());
                             SFXPlayer.PlayRandomSoundFromList(B.GetPlayListID());

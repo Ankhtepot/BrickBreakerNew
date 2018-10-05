@@ -29,7 +29,7 @@ TagManager:
   - Ball
   - Unbreakable
   - Obstacle
-  - 
+  - SplashScreenSL
   - 
   - 
   - 
@@ -61,4 +61,7 @@ TagManager:
     locked: 0
   - name: Upper
     uniqueID: 4276011567
+    locked: 0
+  - name: SplashScreen
+    uniqueID: 3274557827
     locked: 0

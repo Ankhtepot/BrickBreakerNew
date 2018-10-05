@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 0168
 
+using Assets.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,26 +9,30 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour {
-
+    [Header("GameplaySetups")]
     [SerializeField] int brickCount = 0;
     [SerializeField] int ballCount = 0;
     [SerializeField] int Lives = 3;
+    [Header("PlayFieldSetups")]
     [SerializeField] public Vector3 basePaddleBallRelation;
     [SerializeField] bool checkForBricks = true;
-    [SerializeField] TextMeshProUGUI LivesText;
+    //[SerializeField] float SplashScreenShowUpDuration = 2f;
+    private TextMeshProUGUI LivesText;
     //[SerializeField] float xMinKe;
-    [Header("ShakerProps")]
+    [Header("BallShakerProps")]
     [Range(0, 10)][SerializeField] float xMin = 3f;
     [Range(0, 10)][SerializeField] float xMax = 6f;
     [Range(0, 10)][SerializeField] float yMin = 0f;
     [Range(0, 10)][SerializeField] float yMax = 5f;
 
+    //Caches
+    SceneLoader sceneLoader;
     static GameSession instance = null;
     bool brickCheckCDIsOff = true;
-    List<string> notLevelScenes = new List<string> { "Start Screen", "Win Screen", "Game Over" };
 
     private void Start() {
         SceneManager.sceneLoaded += OnSceneLoad;
+        sceneLoader = FindObjectOfType<SceneLoader>();
         if (instance != null && instance != this) {
             //print("Destroying duplicate GameSession");
             Destroy(gameObject);
@@ -35,7 +40,7 @@ public class GameSession : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad(this);
         }
-        if (!currentSceneIsLevel()) {
+        if (!sceneLoader.currentSceneIsLevel()) {
             if (LivesText) LivesText.enabled = false;
         }
         UpdateLivesText();
@@ -68,7 +73,7 @@ public class GameSession : MonoBehaviour {
         brickCheckCDIsOff = false;
         yield return new WaitForSeconds(2f);
         //print("Update: Checking if all bricks are gone.");
-        NextLevelIfBricksAreAllGone();
+        CheckBrickCount();
         brickCheckCDIsOff = true;
     }
 
@@ -85,12 +90,34 @@ public class GameSession : MonoBehaviour {
         return FindObjectsOfType<Ball>().Length;
     }
 
-    private void NextLevelIfBricksAreAllGone() {
+    private void CheckBrickCount() {
         if (CountBricks() <= 0) {
             //Debug.Log("All bricks gone, loading next screen");
-            SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
-            if (currentSceneIsLevel()) sceneLoader.LoadNextScene();
+            IBoss boss = FindObjectOfType<Boss>() as IBoss;
+            if(boss!=null) {
+                boss.StartEncounter();
+            } else {
+                NextLevel();
+            }
         }
+    }
+
+    public void NextLevel() {
+        SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
+        if (sceneLoader) {
+            if(sceneLoader.currentSceneIsLevel()) sceneLoader.LoadScene();
+        } else print("GameSession: SceneLoader not found");
+    }
+
+    private int CountBricks() {
+        //print("In count bricks");
+        int counter = 0;
+        foreach (Brick brick in FindObjectsOfType<Brick>()) {
+            if (brick.tag == "Brick") counter++;
+        }
+        brickCount = counter;
+        //print("Brick counter: " + counter);
+        return counter;
     }
 
     public void AddLife() {
@@ -114,26 +141,10 @@ public class GameSession : MonoBehaviour {
 
     public void UpdateLivesText() {
         if (LivesText) LivesText.text = Lives.ToString();
-    }
-
-    private int CountBricks() {
-        //print("In count bricks");
-        int counter = 0;
-        foreach (Brick brick in FindObjectsOfType<Brick>()) {
-            if (brick.tag == "Brick") counter++;
-        }
-        brickCount = counter;
-        //print("Brick counter: " + counter);
-        return counter;
-    }
-
-    private bool currentSceneIsLevel() {
-        if (notLevelScenes.Contains(SceneManager.GetActiveScene().name)) return false;
-        return true;
-    }
+    }    
 
     private void OnSceneLoad(Scene loadedScene, LoadSceneMode mode) {
-
+        
     }
 
     private void OnDisable() {
